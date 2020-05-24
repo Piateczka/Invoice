@@ -8,7 +8,7 @@ import { PaymentType } from './models/payment-type';
     providedIn: 'root'
 })
 export class InvoiceService {
-    apiAddress = "https://localhost:44331"
+    apiAddress = "https://invoice-api2020.azurewebsites.net"
     invoices;
 
     invoiceStream = new Subject();
