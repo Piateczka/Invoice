@@ -1,0 +1,164 @@
+<form [formGroup]="invoiceForm">
+    <div formGroupName="client">
+        <mat-form-field class="full-width">
+            <mat-label>Nazwa podmiotu</mat-label>
+            <input matInput placeholder="Nazwa podmiotu" formControlName="name" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let c of (clientsAutoComplete) | async" [value]="c.name">
+                    {{c.name}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-label>NIP</mat-label>
+            <input matInput placeholder="NIP" formControlName="nip" [matAutocomplete]="autoNip">
+            <mat-autocomplete #autoNip="matAutocomplete">
+                <mat-option *ngFor="let n of (clientsNipAutoComplete) | async" [value]="n.nip">
+                    {{n.nip}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-label>Ulica</mat-label>
+            <input matInput placeholder="Podaj ulicę" formControlName="street" [matAutocomplete]="autoStreet">
+            <mat-autocomplete #autoStreet="matAutocomplete">
+                <mat-option *ngFor="let n of (clientsNipAutoComplete) | async" [value]="n.street">
+                    {{n.street}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-label>Numer mieszkania</mat-label>
+            <input matInput placeholder="Podaj numer mieszkania" formControlName="premiseNumber" [matAutocomplete]="autoPremise">
+            <mat-autocomplete #autoPremise="matAutocomplete">
+                <mat-option *ngFor="let n of (clientsNipAutoComplete) | async" [value]="n.premiseNumber">
+                    {{n.premiseNumber}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-label>Numer budynku</mat-label>
+            <input matInput placeholder="Podaj numer budynku" formControlName="buildingNumber" [matAutocomplete]="autoBulding">
+            <mat-autocomplete #autoBulding="matAutocomplete">
+                <mat-option *ngFor="let n of (clientsNipAutoComplete) | async" [value]="n.buildingNumber">
+                    {{n.buildingNumber}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-label>Kod pocztowy</mat-label>
+            <input matInput placeholder="Podaj kod pocztowy" formControlName="postalcode" [matAutocomplete]="autoPostal">
+            <mat-autocomplete #autoPostal="matAutocomplete">
+                <mat-option *ngFor="let n of (clientsNipAutoComplete) | async" [value]="n.postalCode">
+                    {{n.postalCode}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-label>Miasto</mat-label>
+            <input matInput placeholder="Podaj miasto" formControlName="city" [matAutocomplete]="autoCity">
+            <mat-autocomplete #autoCity="matAutocomplete">
+                <mat-option *ngFor="let n of (clientsNipAutoComplete) | async" [value]="n.city">
+                    {{n.city}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-label>Kraj</mat-label>
+            <input matInput placeholder="Podaj kraj" formControlName="country" [matAutocomplete]="autoCountry">
+            <mat-autocomplete #autoCountry="matAutocomplete">
+                <mat-option *ngFor="let n of (clientsNipAutoComplete) | async" [value]="n.country">
+                    {{n.country}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </div>
+    <mat-form-field class="full-width">
+
+
+
+        <input matInput [matDatepicker]="picker" placeholder="Data sprzedaży" formControlName="sellDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+
+
+        <input matInput [matDatepicker]="picker2" placeholder="Data wystawienie faktury" formControlName="issueDate">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <mat-label>Termin płatności</mat-label>
+        <input matInput placeholder="Podaj termin płatności" formControlName="paymentTime">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <mat-label>Forma płatności</mat-label>
+        <mat-select formControlName="paymentType">
+            <mat-option *ngFor="let p of paymentType" [value]="p">{{p.paymentTypeName}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <table class="table table-border">
+        <thead class="text-nowrap">
+            <th>Nazwa<span class="ui-column-resizer" dragableColumn> </span></th>
+            <th>Ilość<span class="ui-column-resizer" dragableColumn> </span></th>
+            <th>Cenna netto<span class="ui-column-resizer" dragableColumn> </span></th>
+            <th>Stawka vat<span class="ui-column-resizer" dragableColumn> </span></th>
+            <th></th>
+        </thead>
+        <tbody>
+            <ng-container formArrayName="invoiceRow" *ngFor="let group of getFormControls.controls ; let i=index">
+                <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
+                    <td>
+                        <mat-form-field>
+                            <input matInput type="text" formControlName="name">
+
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field>
+                            <input matInput type="text" formControlName="unit">
+                        </mat-form-field>
+                    </td>
+
+                    <td>
+                        <mat-form-field>
+                            <input matInput type="text" formControlName="quantity">
+                        </mat-form-field>
+                    </td>
+
+                    <td>
+                        <mat-form-field>
+                            <input matInput type="text" formControlName="varRate">
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-icon class="delete" (click)="deleteRow(i)">delete_forever</mat-icon>
+                        <mat-icon class="done" (click)="doneRow(group)">done</mat-icon>
+                    </td>
+                </tr>
+                <tr *ngIf="!group.get('isEditable').value">
+                    <td>
+                        {{group.get('name').value}}
+                    </td>
+                    <td>
+                        {{group.get('unit').value}}
+                    </td>
+                    <td>
+                        {{group.get('quantity').value}}
+                    </td>
+                    <td>
+                        {{group.get('varRate').value}}
+                    </td>
+                    <td>
+                        <mat-icon class="edit" (click)="editRow(group)">edit</mat-icon>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+    <div class="action-container">
+        <button mat-raised-button type="submit" (click)="addRow()">Dodaj pozycję</button>
+        <button mat-raised-button type="submit" [disabled]="invoiceForm.invalid" (click)="submitForm()">Zapisz</button>
+    </div>
+</form>

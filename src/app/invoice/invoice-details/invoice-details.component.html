@@ -1,0 +1,134 @@
+<form [formGroup]="invoiceForm">
+    <mat-label>{{getControlLabel('year')+"/"+getControlLabel('month')+"/"+getControlLabel('number')}}</mat-label>
+    <div formGroupName="client">
+        <mat-form-field class="full-width">
+            <mat-label>Company name</mat-label>
+            <input matInput placeholder="Enter Company name" formControlName="name">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-label>NIP</mat-label>
+            <input matInput placeholder="Enter NIP" formControlName="nip">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-label>Street</mat-label>
+            <input matInput placeholder="Enter Street" formControlName="street">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-label>Premise Number</mat-label>
+            <input matInput placeholder="Enter Premise Number" formControlName="premiseNumber">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-label>Bulding Number</mat-label>
+            <input matInput placeholder="Enter Bulding Number" formControlName="buildingNumber">
+
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-label>Postal Code</mat-label>
+            <input matInput placeholder="Enter Postal Code" formControlName="postalcode">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-label>City</mat-label>
+            <input matInput placeholder="Enter City" formControlName="city">
+
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-label>Country</mat-label>
+            <input matInput placeholder="Enter Country" formControlName="country">
+
+        </mat-form-field>
+        <input type="hidden" formControlName="clientId">
+    </div>
+    <mat-form-field class="full-width">
+
+
+        <input matInput [matDatepicker]="picker" placeholder="Enter Sell Date" formControlName="sellDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+
+
+        <input matInput [matDatepicker]="picker2" placeholder="Enter Issue Date" formControlName="issueDate">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <mat-label>Pay Time</mat-label>
+        <input matInput placeholder="Enter Pay Time" formControlName="paymentTime">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <mat-label>Forma płatności</mat-label>
+        <mat-select formControlName="paymentType" [compareWith]="compareFn">
+            <mat-option *ngFor="let p of paymentType" [value]="p">{{p.paymentTypeName}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <input type="hidden" formControlName="invoiceId">
+    <table class="table table-border">
+        <thead class="text-nowrap">
+            <th>Name <span class="ui-column-resizer" dragableColumn> </span></th>
+            <th>Net price unit<span class="ui-column-resizer" dragableColumn> </span></th>
+            <th>Quantity<span class="ui-column-resizer" dragableColumn> </span></th>
+            <th>Vat rate<span class="ui-column-resizer" dragableColumn> </span></th>
+            <th></th>
+        </thead>
+        <tbody>
+            <ng-container formArrayName="invoiceRow" *ngFor="let group of getFormControls.controls ; let i=index">
+                <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
+                    <td>
+                        <mat-form-field>
+                            <input matInput type="text" formControlName="name">
+
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field>
+                            <input matInput type="text" formControlName="unit">
+                        </mat-form-field>
+                    </td>
+
+                    <td>
+                        <mat-form-field>
+                            <input matInput type="text" formControlName="quantity">
+                        </mat-form-field>
+                    </td>
+
+                    <td>
+                        <mat-form-field>
+                            <input matInput type="text" formControlName="varRate">
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-icon class="done" (click)="doneRow(group)">done</mat-icon>
+                    </td>
+                </tr>
+                <tr *ngIf="!group.get('isEditable').value">
+                    <td>
+                        {{group.get('name').value}}
+                    </td>
+                    <td>
+                        {{group.get('unit').value}}
+                    </td>
+                    <td>
+                        {{group.get('quantity').value}}
+                    </td>
+                    <td>
+                        {{group.get('varRate').value}}
+                    </td>
+                    <td style="display:none;">
+                        {{group.get('invoiceRowId').value}}
+                    </td>
+                    <td>
+
+                        <mat-icon class="edit" (click)="editRow(group)">edit</mat-icon>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+    <div class="action-container">
+        <button mat-raised-button type="submit" (click)="addRow()">Add row</button>
+        <button mat-raised-button [disabled]="invoiceForm.invalid" type="button" (click)="gen()">Download</button>
+        <button mat-raised-button [disabled]="invoiceForm.invalid" type="button" (click)="submitForm()">Submit</button>
+    </div>
+</form>

@@ -1,0 +1,35 @@
+<form [formGroup]="clientForm">
+    <mat-form-field class="full-width">
+        <mat-label>Nazwa podmiotu</mat-label>
+        <input matInput placeholder="Nazwa podmiotu" formControlName="name">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <mat-label>NIP</mat-label>
+        <input matInput placeholder="NIP" formControlName="nip">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <mat-label>Ulica</mat-label>
+        <input matInput placeholder="Podaj ulicę" formControlName="street">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <mat-label>Numer mieszkania</mat-label>
+        <input matInput placeholder="Podaj numer mieszkania" formControlName="premiseNumber">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <mat-label>Numer budynku</mat-label>
+        <input matInput placeholder="Podaj numer budynku" formControlName="buildingNumber">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <mat-label>Kod pocztowy</mat-label>
+        <input matInput placeholder="Podaj kod pocztowy" formControlName="postalcode">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <mat-label>Miasto</mat-label>
+        <input matInput placeholder="Podaj miasto" formControlName="city">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <mat-label>Kraj</mat-label>
+        <input matInput placeholder="Podaj kraj" formControlName="country">
+    </mat-form-field>
+    <button mat-raised-button [disabled]="clientForm.invalid" type="submit" (click)="submitForm()">Zapisz</button>
+</form>
