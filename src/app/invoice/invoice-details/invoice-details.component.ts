@@ -21,7 +21,7 @@ export class InvoiceDetailsComponent {
     id;
     group: FormGroup[];
     numberPattern = "^[0-9.]*$";
-    // postalCodePattern = "^\d{2}(-\d{3})?$"
+    charPattern = "^[a-zA-Z]+$";
     constructor(private inv: InvoiceService, private activateRoute: ActivatedRoute,
         private fb: FormBuilder, private _snackBar: MatSnackBar) {
         this.inv.getPaymentType().pipe().subscribe(paymentType => {
@@ -32,14 +32,14 @@ export class InvoiceDetailsComponent {
         this.inv.getDetails(this.id).subscribe((data) => {
             this.invoiceForm = this.fb.group({
                 client: this.fb.group({
-                    name: [data.client.name, Validators.required],
+                    name: [data.client.name, [Validators.required, Validators.pattern(this.charPattern)]],
                     nip: [data.client.nip, [Validators.required, Validators.pattern(this.numberPattern)]],
-                    street: [data.client.street, Validators.required],
+                    street: [data.client.street, [Validators.required, Validators.pattern(this.charPattern)]],
                     buildingNumber: [data.client.buildingNumber],
                     premiseNumber: [data.client.premiseNumber, [Validators.required, Validators.pattern(this.numberPattern)]],
                     postalcode: [data.client.postalCode, Validators.required],
-                    city: [data.client.city, Validators.required],
-                    country: [data.client.country, Validators.required],
+                    city: [data.client.city, [Validators.required, Validators.pattern(this.charPattern)]],
+                    country: [data.client.country, [Validators.required, Validators.pattern(this.charPattern)]],
                     clientId: [data.client.clientId, Validators.required]
                 }),
                 invoiceId: [data.invoiceId, Validators.required],
@@ -52,12 +52,12 @@ export class InvoiceDetailsComponent {
                 paymentType: [data.paymentType, Validators.required],
                 invoiceRow: this.fb.array(data.invoiceRow.map(row => this.fb.group({
                     invoiceRowId: [row.invoiceRowId],
-                    name: [row.name, Validators.required],
+                    name: [row.name, [Validators.required, Validators.pattern(this.charPattern)]],
                     unit: [row.unit, [Validators.required, Validators.pattern(this.numberPattern)]],
                     quantity: [row.quantity, [Validators.required, Validators.pattern(this.numberPattern)]],
                     varRate: [row.varRate, [Validators.required, Validators.maxLength(2), Validators.pattern(this.numberPattern)]],
                     isEditable: [false]
-                }), Validators.minLength(1)))
+                }), Validators.required))
             });
             this.setOptionValue('paymentType', data.paymentType)
 
@@ -230,15 +230,15 @@ export class InvoiceDetailsComponent {
     updateForm() {
         this.invoiceForm = this.fb.group({
             client: this.fb.group({
-                name: ['', Validators.required],
+                name: ['', [Validators.required, Validators.pattern(this.charPattern)]],
                 clientId: ['', Validators.required],
                 nip: ['', [Validators.required, Validators.pattern(this.numberPattern)]],
-                street: ['', Validators.required],
+                street: ['', [Validators.required, Validators.pattern(this.charPattern)]],
                 buildingNumber: [''],
                 premiseNumber: ['', [Validators.required, Validators.pattern(this.numberPattern)]],
                 postalcode: ['', Validators.required],
-                country: ['', Validators.required],
-                city: ['', Validators.required]
+                country: ['', [Validators.required, Validators.pattern(this.charPattern)]],
+                city: ['', [Validators.required, Validators.pattern(this.charPattern)]],
             }),
             invoiceId: ['', Validators.required],
             sellDate: ['', Validators.required],
@@ -250,13 +250,13 @@ export class InvoiceDetailsComponent {
             paymentTime: ['', Validators.required],
             invoiceRow: this.fb.array([
                 this.fb.group({
-                    name: ['', Validators.required],
+                    name: ['', [Validators.required, Validators.pattern(this.charPattern)]],
                     unit: ['', [Validators.required, Validators.pattern(this.numberPattern)]],
                     quantity: ['', [Validators.required, Validators.pattern(this.numberPattern)]],
                     varRate: ['', [Validators.required, Validators.maxLength(2), Validators.pattern(this.numberPattern)]],
                     isEditable: [true]
                 })
-            ], Validators.minLength(1))
+            ], Validators.required)
         });
     }
     openSnackBar(message) {

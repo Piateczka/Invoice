@@ -17,7 +17,7 @@ export class AddInvoiceComponent {
     
     clientsAutoComplete;
     numberPattern = "^[0-9]*$";
-    // postalCodePattern = "^\d{2}-\d{3}?$"
+    charPattern = "^[a-zA-Z]+$";
     clientsNipAutoComplete;
     paymentType;
     invoiceForm: FormGroup;
@@ -32,14 +32,14 @@ export class AddInvoiceComponent {
         this.touchedinvoiceRow = [];
         this.invoiceForm = this.fb.group({
             client: this.fb.group({
-                name: ['', Validators.required],
+                name: ['', [Validators.required, Validators.pattern(this.charPattern)]],
                 nip: ['', [Validators.required, Validators.pattern(this.numberPattern)]],
                 street: ['', Validators.required],
                 buildingNumber: [''],
                 premiseNumber: ['', [Validators.required,Validators.pattern(this.numberPattern)]],
                 postalcode: ['', [Validators.required]],
-                country: ['', Validators.required],
-                city: ['', Validators.required]
+                country: ['',[Validators.required, Validators.pattern(this.charPattern)]],
+                city: ['', [Validators.required, Validators.pattern(this.charPattern)]],
             }),
             sellDate: ['', Validators.required],
             issueDate: ['', Validators.required],
@@ -47,7 +47,7 @@ export class AddInvoiceComponent {
             paymentTime: ['', Validators.required],
             invoiceRow: this.fb.array([
                 this.fb.group({
-                    name: ['', Validators.required],
+                    name: ['', [Validators.required, Validators.pattern(this.charPattern)]],
                     unit: ['', [Validators.required, Validators.pattern(this.numberPattern)]],
                     quantity: ['', [Validators.required, Validators.pattern(this.numberPattern)]],
                     varRate: ['', [Validators.required, Validators.maxLength(2), Validators.pattern(this.numberPattern)]],

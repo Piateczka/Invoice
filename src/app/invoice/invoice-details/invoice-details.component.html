@@ -2,7 +2,7 @@
     <mat-label>{{getControlLabel('year')+"/"+getControlLabel('month')+"/"+getControlLabel('number')}}</mat-label>
     <div formGroupName="client">
         <mat-form-field class="full-width">
-            <mat-label>Company name</mat-label>
+            <mat-label>Nazwa podmiotu</mat-label>
             <input matInput placeholder="Enter Company name" formControlName="name">
         </mat-form-field>
         <mat-form-field class="full-width">
@@ -10,29 +10,29 @@
             <input matInput placeholder="Enter NIP" formControlName="nip">
         </mat-form-field>
         <mat-form-field class="full-width">
-            <mat-label>Street</mat-label>
+            <mat-label>Ulica</mat-label>
             <input matInput placeholder="Enter Street" formControlName="street">
         </mat-form-field>
         <mat-form-field class="full-width">
-            <mat-label>Premise Number</mat-label>
+            <mat-label>Numer mieszkania</mat-label>
             <input matInput placeholder="Enter Premise Number" formControlName="premiseNumber">
         </mat-form-field>
         <mat-form-field class="full-width">
-            <mat-label>Bulding Number</mat-label>
+            <mat-label>Numer budynku</mat-label>
             <input matInput placeholder="Enter Bulding Number" formControlName="buildingNumber">
 
         </mat-form-field>
         <mat-form-field class="full-width">
-            <mat-label>Postal Code</mat-label>
+            <mat-label>Kod pocztowy</mat-label>
             <input matInput placeholder="Enter Postal Code" formControlName="postalcode">
         </mat-form-field>
         <mat-form-field class="full-width">
-            <mat-label>City</mat-label>
+            <mat-label>Miasto</mat-label>
             <input matInput placeholder="Enter City" formControlName="city">
 
         </mat-form-field>
         <mat-form-field class="full-width">
-            <mat-label>Country</mat-label>
+            <mat-label>Kraj</mat-label>
             <input matInput placeholder="Enter Country" formControlName="country">
 
         </mat-form-field>
@@ -53,7 +53,7 @@
         <mat-datepicker #picker2></mat-datepicker>
     </mat-form-field>
     <mat-form-field class="full-width">
-        <mat-label>Pay Time</mat-label>
+        <mat-label>Ilość dni na zapłatę faktury</mat-label>
         <input matInput placeholder="Enter Pay Time" formControlName="paymentTime">
     </mat-form-field>
     <mat-form-field class="full-width">
@@ -66,10 +66,10 @@
     <input type="hidden" formControlName="invoiceId">
     <table class="table table-border">
         <thead class="text-nowrap">
-            <th>Name <span class="ui-column-resizer" dragableColumn> </span></th>
-            <th>Net price unit<span class="ui-column-resizer" dragableColumn> </span></th>
-            <th>Quantity<span class="ui-column-resizer" dragableColumn> </span></th>
-            <th>Vat rate<span class="ui-column-resizer" dragableColumn> </span></th>
+            <th>Nazwa<span class="ui-column-resizer" dragableColumn> </span></th>
+            <th>Ilość<span class="ui-column-resizer" dragableColumn> </span></th>
+            <th>Cenna netto<span class="ui-column-resizer" dragableColumn> </span></th>
+            <th>Stawka vat<span class="ui-column-resizer" dragableColumn> </span></th>
             <th></th>
         </thead>
         <tbody>

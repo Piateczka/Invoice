@@ -11,7 +11,8 @@ import { ClientService } from '../../client.service';
 })
 
 export class ClientDetailsComponent {
-    postalCodePattern = "^\d{2}(-\d{3})?$"
+    numberPattern = "^[0-9]*$";
+    charPattern = "^[a-zA-Z]+$";
     clients : Client;
     clientForm: FormGroup;
      id;
@@ -30,14 +31,14 @@ export class ClientDetailsComponent {
 
         this.c.getClient(this.id).subscribe((data) => {
             this.clientForm = this.fb.group({
-                name: [data.name],
-                nip: [data.nip],
-                street: [data.street],
+                name: [data.name, [Validators.required, Validators.pattern(this.charPattern)]],
+                nip: [data.nip, [Validators.required, Validators.pattern(this.numberPattern)]],
+                street: [data.street, [Validators.required, Validators.pattern(this.charPattern)]],
                 buildingNumber: [data.buildingNumber],
-                premiseNumber: [data.premiseNumber],
-                postalcode: [data.postalCode, Validators.required, Validators.pattern(this.postalCodePattern)],
-                city: [data.city],
-                country: [data.country]
+                premiseNumber: [data.premiseNumber, [Validators.required, Validators.pattern(this.numberPattern)]],
+                postalcode: [data.postalCode, Validators.required],
+                city: [data.city, [Validators.required,Validators.pattern(this.charPattern)]],
+                country: [data.country, [Validators.required, Validators.pattern(this.charPattern)]],
             })
         })
 
@@ -46,14 +47,14 @@ export class ClientDetailsComponent {
 
     updateForm() {
         this.clientForm = this.fb.group({
-            name: ['', Validators.required],
-            street: ['', Validators.required],
-            buildingNumber: ['', Validators.required],
-            premiseNumber: ['', Validators.required],
-            postalcode: ['', Validators.required, Validators.pattern(this.postalCodePattern)],
-            city: ['', Validators.required],
-            country: ['', Validators.required],
-            nip: ['', Validators.required]
+            name: ['', [Validators.required, Validators.pattern(this.charPattern)]],
+            street: ['', [Validators.required, Validators.pattern(this.charPattern)]],
+            buildingNumber: [''],
+            premiseNumber: ['', [Validators.required, Validators.pattern(this.numberPattern)]],
+            postalcode: ['', Validators.required],
+            city: ['', [Validators.required,Validators.pattern(this.charPattern)]],
+            country: ['', [Validators.required, Validators.pattern(this.charPattern)]],
+            nip: ['', [Validators.required, Validators.pattern(this.numberPattern)]],
         });
     }
     openSnackBar(message) {

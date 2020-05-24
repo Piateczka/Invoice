@@ -13,7 +13,7 @@ export class AddClientComponent {
     client: Client;
     numberPattern = "^[0-9]*$";
     charPattern = "^[a-zA-Z]+$";
-    postalCodePattern = "^\d{2}(-\d{3})?$"
+
     clientForm: FormGroup;
     constructor(private fb: FormBuilder, private c: ClientService, private _snackBar: MatSnackBar) {
 
@@ -21,7 +21,7 @@ export class AddClientComponent {
             name: ['', [Validators.required, Validators.pattern(this.charPattern)]],
             street: ['', [Validators.required, Validators.pattern(this.charPattern)]],
             buildingNumber: [''],
-            premiseNumber: ['', Validators.required, Validators.pattern(this.numberPattern)],
+            premiseNumber: ['', [Validators.required, Validators.pattern(this.numberPattern)]],
             postalcode: ['', Validators.required],
             city: ['', [Validators.required,Validators.pattern(this.charPattern)]],
             country: ['', [Validators.required, Validators.pattern(this.charPattern)]],
