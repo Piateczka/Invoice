@@ -35,7 +35,7 @@ export class AddInvoiceComponent {
             client: this.fb.group({
                 name: ['', [Validators.required, Validators.pattern(this.validation.charPattern)]],
                 nip: ['', [Validators.required, Validators.pattern(this.validation.numberPattern)]],
-                street: ['', Validators.required],
+                street: ['', [Validators.required,, Validators.pattern(this.validation.charPattern)]],
                 buildingNumber: [''],
                 premiseNumber: ['', [Validators.required,Validators.pattern(this.validation.numberPattern)]],
                 postalcode: ['', [Validators.required]],
