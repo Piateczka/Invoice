@@ -83,15 +83,18 @@ export class InvoiceService {
     }
 
     searchInvoiceByNumber(query) {
-        this.http.get(this.apiAddress + '/invoice/FindInvoiceByNumber&query=' + query).pipe(
-            map((response: Invoice) => {
-                return response;
+        if(query!==undefined || query!==null){
+            this.http.get(this.apiAddress + '/invoice/FindInvoiceByNumber&query=' + query).pipe(
+                map((response: Invoice) => {
+                    return response;
+    
+                })).subscribe(invoices => {
+                    this.invoices = invoices
+                    console.log(invoices as Invoice)
+                    this.invoiceStream.next(this.invoices)
+                })
+        }
 
-            })).subscribe(invoices => {
-                this.invoices = invoices
-                console.log(invoices as Invoice)
-                this.invoiceStream.next(this.invoices)
-            })
     }
 
     errorHandl(error) {
