@@ -3,7 +3,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ClientService } from '../../client.service';
 import { Client } from '../../models/client';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ValidationService } from 'src/app/validation.service';
+
 
 @Component({
     selector: 'add-client',
@@ -16,17 +16,17 @@ export class AddClientComponent {
     charPattern = "^[a-zA-Z]+$";
 
     clientForm: FormGroup;
-    constructor(private fb: FormBuilder,private validation : ValidationService, private c: ClientService, private _snackBar: MatSnackBar) {
+    constructor(private fb: FormBuilder, private c: ClientService, private _snackBar: MatSnackBar) {
 
         this.clientForm = this.fb.group({
-            name: ['', [Validators.required, Validators.pattern(this.validation.charPattern)]],
-            street: ['', [Validators.required, Validators.pattern(this.validation.charPattern)]],
+            name: ['', [Validators.required]],
+            street: ['', [Validators.required]],
             buildingNumber: [''],
-            premiseNumber: ['', [Validators.required, Validators.pattern(this.validation.numberPattern)]],
+            premiseNumber: ['', [Validators.required]],
             postalcode: ['', Validators.required],
-            city: ['', [Validators.required,Validators.pattern(this.validation.charPattern)]],
-            country: ['', [Validators.required, Validators.pattern(this.validation.charPattern)]],
-            nip: ['', [Validators.required, Validators.pattern(this.validation.numberPattern)]],
+            city: ['', [Validators.required]],
+            country: ['', [Validators.required]],
+            nip: ['', [Validators.required]],
         });
     }
     openSnackBar(message) {

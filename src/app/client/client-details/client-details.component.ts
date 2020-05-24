@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Client } from '../../models/client';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ClientService } from '../../client.service';
-import { ValidationService } from 'src/app/validation.service';
+
 @Component({
     selector: 'client-details',
     templateUrl: './client-details.component.html'
@@ -22,8 +22,7 @@ export class ClientDetailsComponent {
 
 
     }
-    constructor(private fb: FormBuilder,  private c: ClientService,  private activateRoute: ActivatedRoute,
-        private validation : ValidationService, private _snackBar: MatSnackBar) {
+    constructor(private fb: FormBuilder,  private c: ClientService,  private activateRoute: ActivatedRoute, private _snackBar: MatSnackBar) {
 
 
          this.id = this.activateRoute.snapshot.params['id'];
@@ -32,14 +31,14 @@ export class ClientDetailsComponent {
 
         this.c.getClient(this.id).subscribe((data) => {
             this.clientForm = this.fb.group({
-                name: [data.name, [Validators.required, Validators.pattern(this.validation.charPattern)]],
-                nip: [data.nip, [Validators.required, Validators.pattern(this.validation.numberPattern)]],
-                street: [data.street, [Validators.required, Validators.pattern(this.validation.charPattern)]],
+                name: [data.name, [Validators.required]],
+                nip: [data.nip, [Validators.required]],
+                street: [data.street, [Validators.required]],
                 buildingNumber: [data.buildingNumber],
-                premiseNumber: [data.premiseNumber, [Validators.required, Validators.pattern(this.validation.numberPattern)]],
+                premiseNumber: [data.premiseNumber, [Validators.required]],
                 postalcode: [data.postalCode, Validators.required],
-                city: [data.city, [Validators.required,Validators.pattern(this.validation.charPattern)]],
-                country: [data.country, [Validators.required, Validators.pattern(this.validation.charPattern)]],
+                city: [data.city, [Validators.required]],
+                country: [data.country, [Validators.required]],
             })
         })
 
@@ -48,14 +47,14 @@ export class ClientDetailsComponent {
 
     updateForm() {
         this.clientForm = this.fb.group({
-            name: ['', [Validators.required, Validators.pattern(this.validation.charPattern)]],
-            street: ['', [Validators.required, Validators.pattern(this.validation.charPattern)]],
+            name: ['', [Validators.required]],
+            street: ['', [Validators.required]],
             buildingNumber: [''],
-            premiseNumber: ['', [Validators.required, Validators.pattern(this.validation.numberPattern)]],
+            premiseNumber: ['', [Validators.required]],
             postalcode: ['', Validators.required],
-            city: ['', [Validators.required,Validators.pattern(this.validation.charPattern)]],
-            country: ['', [Validators.required, Validators.pattern(this.validation.charPattern)]],
-            nip: ['', [Validators.required, Validators.pattern(this.validation.numberPattern)]],
+            city: ['', [Validators.required]],
+            country: ['', [Validators.required]],
+            nip: ['', [Validators.required]],
         });
     }
     openSnackBar(message) {
