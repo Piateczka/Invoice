@@ -1,0 +1,31 @@
+<h1 id="tableLabel">Lista klientów</h1>
+
+
+<p *ngIf="!clients"><em>Loading...</em></p>
+<client-search></client-search>
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="clients">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Nazwa</th>
+            <th>Adres</th>
+            <th>Pańśtwo</th>
+            <th>NIP</th>
+            <th></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let client of clients | async" [attr.id]="client.clientId">
+            <td>{{ client.clientId }}</td>
+            <td>{{ client.name }}</td>
+            <td>{{ client.street }} {{ client.premiseNumber }} {{ client.buildingNumber }} {{ client.postalCode }} {{ client.city }}</td>
+            <td>{{ client.country }}</td>
+            <td>{{ client.nip }}</td>
+            <td>
+                <mat-icon class="delete" (click)="deleteRow(client.clientId)">delete_forever</mat-icon>
+                <mat-icon class="edit" [routerLink]="['/client/detail',client.clientId]">edit</mat-icon>
+            </td>
+        </tr>
+    </tbody>
+</table>

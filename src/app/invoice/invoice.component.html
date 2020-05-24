@@ -1,0 +1,38 @@
+<h1 id="tableLabel">Lista faktur</h1>
+
+<p>Aby rozpocząć szukanie nalezy podać numer faktury </p>
+
+<p *ngIf="!invoices"><em>Loading...</em></p>
+<invoice-search></invoice-search>
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="invoices">
+    <thead>
+        <tr>
+            <th>Numer faktury</th>
+            <th>Data sprzedaży</th>
+            <th>Data wystawienia</th>
+            <th>Czas płatnbości (dni)</th>
+            <th>Czy zapłacono</th>
+            <th>Cenna netto</th>
+            <th>Cenna brutto</th>
+            <th></th>
+            <th></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let invoice of invoices | async" [attr.id]="invoice.InvoiceId">
+            <td>{{ invoice.number }}/{{ invoice.month }}/{{ invoice.year }}</td>
+            <td>{{ invoice.sellDate | date : 'dd/MM/yyyy' }}</td>
+            <td>{{ invoice.issueDate | date : 'dd/MM/yyyy' }}</td>
+            <td>{{ invoice.paymentTime }}</td>
+            <td>{{ invoice.isPayed }}</td>
+            <td>{{ invoice.nettoValue | number: '1.2-2' | prefixCurrency: ' zł' }}</td>
+            <td>{{ invoice.grossValue | number: '1.2-2' | prefixCurrency: ' zł' }}</td>
+            <td>
+                <mat-icon class="delete" (click)="deleteRow(invoice.invoiceId)">delete_forever</mat-icon>
+                <mat-icon class="edit" [routerLink]="['/invoice/detail',invoice.invoiceId]">edit</mat-icon>
+            </td>
+
+
+        </tr>
+    </tbody>
