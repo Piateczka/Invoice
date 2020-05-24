@@ -5,6 +5,6 @@ import { Injectable } from '@angular/core';
 })
 export class ValidationService {
   numberPattern = "^[0-9]*$";
-  charPattern = "^[a-zA-Z ]+$";
+  charPattern = "^/^[\s\p{L} ]+$/u";
   constructor() { }
 }
