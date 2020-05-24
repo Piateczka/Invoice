@@ -9,7 +9,7 @@ import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
-  declarations: [InvoiceComponent, InvoiceSearchComponent, InvoiceDetailsComponent, AddInvoiceComponent,],
+  declarations: [InvoiceComponent, InvoiceSearchComponent, InvoiceDetailsComponent, AddInvoiceComponent],
   imports: [
     CommonModule,
     SharedModule

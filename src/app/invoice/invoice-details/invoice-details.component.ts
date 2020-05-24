@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Invoice } from '../../models/invoice';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { ValidationService } from 'src/app/validation.service';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -20,10 +21,8 @@ export class InvoiceDetailsComponent {
     paymentType;
     id;
     group: FormGroup[];
-    numberPattern = "^[0-9.]*$";
-    charPattern = "^[a-zA-Z]+$";
     constructor(private inv: InvoiceService, private activateRoute: ActivatedRoute,
-        private fb: FormBuilder, private _snackBar: MatSnackBar) {
+        private fb: FormBuilder, private _snackBar: MatSnackBar, private validation: ValidationService) {
         this.inv.getPaymentType().pipe().subscribe(paymentType => {
             this.paymentType = paymentType;
 
@@ -32,14 +31,14 @@ export class InvoiceDetailsComponent {
         this.inv.getDetails(this.id).subscribe((data) => {
             this.invoiceForm = this.fb.group({
                 client: this.fb.group({
-                    name: [data.client.name, [Validators.required, Validators.pattern(this.charPattern)]],
-                    nip: [data.client.nip, [Validators.required, Validators.pattern(this.numberPattern)]],
-                    street: [data.client.street, [Validators.required, Validators.pattern(this.charPattern)]],
+                    name: [data.client.name, [Validators.required, Validators.pattern(this.validation.charPattern)]],
+                    nip: [data.client.nip, [Validators.required, Validators.pattern(this.validation.numberPattern)]],
+                    street: [data.client.street, [Validators.required, Validators.pattern(this.validation.charPattern)]],
                     buildingNumber: [data.client.buildingNumber],
-                    premiseNumber: [data.client.premiseNumber, [Validators.required, Validators.pattern(this.numberPattern)]],
+                    premiseNumber: [data.client.premiseNumber, [Validators.required, Validators.pattern(this.validation.numberPattern)]],
                     postalcode: [data.client.postalCode, Validators.required],
-                    city: [data.client.city, [Validators.required, Validators.pattern(this.charPattern)]],
-                    country: [data.client.country, [Validators.required, Validators.pattern(this.charPattern)]],
+                    city: [data.client.city, [Validators.required, Validators.pattern(this.validation.charPattern)]],
+                    country: [data.client.country, [Validators.required, Validators.pattern(this.validation.charPattern)]],
                     clientId: [data.client.clientId, Validators.required]
                 }),
                 invoiceId: [data.invoiceId, Validators.required],
@@ -52,10 +51,10 @@ export class InvoiceDetailsComponent {
                 paymentType: [data.paymentType, Validators.required],
                 invoiceRow: this.fb.array(data.invoiceRow.map(row => this.fb.group({
                     invoiceRowId: [row.invoiceRowId],
-                    name: [row.name, [Validators.required, Validators.pattern(this.charPattern)]],
-                    unit: [row.unit, [Validators.required, Validators.pattern(this.numberPattern)]],
-                    quantity: [row.quantity, [Validators.required, Validators.pattern(this.numberPattern)]],
-                    varRate: [row.varRate, [Validators.required, Validators.maxLength(2), Validators.pattern(this.numberPattern)]],
+                    name: [row.name, [Validators.required, Validators.pattern(this.validation.charPattern)]],
+                    unit: [row.unit, [Validators.required, Validators.pattern(this.validation.numberPattern)]],
+                    quantity: [row.quantity, [Validators.required, Validators.pattern(this.validation.numberPattern)]],
+                    varRate: [row.varRate, [Validators.required, Validators.maxLength(2), Validators.pattern(this.validation.numberPattern)]],
                     isEditable: [false]
                 }), Validators.required))
             });
@@ -230,15 +229,15 @@ export class InvoiceDetailsComponent {
     updateForm() {
         this.invoiceForm = this.fb.group({
             client: this.fb.group({
-                name: ['', [Validators.required, Validators.pattern(this.charPattern)]],
+                name: ['', [Validators.required, Validators.pattern(this.validation.charPattern)]],
                 clientId: ['', Validators.required],
-                nip: ['', [Validators.required, Validators.pattern(this.numberPattern)]],
-                street: ['', [Validators.required, Validators.pattern(this.charPattern)]],
+                nip: ['', [Validators.required, Validators.pattern(this.validation.numberPattern)]],
+                street: ['', [Validators.required, Validators.pattern(this.validation.charPattern)]],
                 buildingNumber: [''],
-                premiseNumber: ['', [Validators.required, Validators.pattern(this.numberPattern)]],
+                premiseNumber: ['', [Validators.required, Validators.pattern(this.validation.numberPattern)]],
                 postalcode: ['', Validators.required],
-                country: ['', [Validators.required, Validators.pattern(this.charPattern)]],
-                city: ['', [Validators.required, Validators.pattern(this.charPattern)]],
+                country: ['', [Validators.required, Validators.pattern(this.validation.charPattern)]],
+                city: ['', [Validators.required, Validators.pattern(this.validation.charPattern)]],
             }),
             invoiceId: ['', Validators.required],
             sellDate: ['', Validators.required],
@@ -250,10 +249,10 @@ export class InvoiceDetailsComponent {
             paymentTime: ['', Validators.required],
             invoiceRow: this.fb.array([
                 this.fb.group({
-                    name: ['', [Validators.required, Validators.pattern(this.charPattern)]],
-                    unit: ['', [Validators.required, Validators.pattern(this.numberPattern)]],
-                    quantity: ['', [Validators.required, Validators.pattern(this.numberPattern)]],
-                    varRate: ['', [Validators.required, Validators.maxLength(2), Validators.pattern(this.numberPattern)]],
+                    name: ['', [Validators.required, Validators.pattern(this.validation.charPattern)]],
+                    unit: ['', [Validators.required, Validators.pattern(this.validation.numberPattern)]],
+                    quantity: ['', [Validators.required, Validators.pattern(this.validation.numberPattern)]],
+                    varRate: ['', [Validators.required, Validators.maxLength(2), Validators.pattern(this.validation.numberPattern)]],
                     isEditable: [true]
                 })
             ], Validators.required)
@@ -270,9 +269,9 @@ export class InvoiceDetailsComponent {
     initiateForm() {
         return this.fb.group({
             name: ['', Validators.required],
-            unit: ['', [Validators.required], Validators.pattern(this.numberPattern)],
-            quantity: ['', [Validators.required], Validators.pattern(this.numberPattern)],
-            varRate: ['', [Validators.required, Validators.maxLength(2), Validators.pattern(this.numberPattern)]],
+            unit: ['', [Validators.required], Validators.pattern(this.validation.numberPattern)],
+            quantity: ['', [Validators.required], Validators.pattern(this.validation.numberPattern)],
+            varRate: ['', [Validators.required, Validators.maxLength(2), Validators.pattern(this.validation.numberPattern)]],
             isEditable: [true]
         });
     }
