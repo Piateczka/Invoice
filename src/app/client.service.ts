@@ -8,7 +8,7 @@ import { Client } from './models/client';
   providedIn: 'root'
 })
 export class ClientService {
-  apiAddress = "https://localhost:44331"
+  apiAddress = "https://invoice-api2020.azurewebsites.net"
   clients;
   clientsStream = new Subject();
   headers = {
